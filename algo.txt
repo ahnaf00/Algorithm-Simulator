@@ -1,0 +1,8 @@
+Implement the following CPU scheduling algorithms: First-Come, First-Served (FCFS), Shortest
+Job First (SJF), Round Robin (RR), and Priority Scheduling.
+
+
+1. First-Come, First-Served (FCFS)
+2. Shortest Job First (SJF)
+3. Round Robin (RR)
+4. Priority Scheduling
