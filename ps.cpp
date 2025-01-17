@@ -1,12 +1,12 @@
 #include "scheduling.h"
 
-void calculateSJF(vector<ProcessSJF>&processes)
+void calculatePriorityScheduling(vector<ProcessPS>&processes)
 {
     int n = processes.size();
     int completed = 0, currentTime = 0, minIndex = -1;
     int totalWaitingTime = 0, totalTurnaroundTime = 0;
 
-    for(auto &p : processes)
+    for (auto &p:processes)
     {
         p.remainingTime = p.burstTime;
     }
@@ -15,13 +15,12 @@ void calculateSJF(vector<ProcessSJF>&processes)
 
     while (completed < n)
     {
-        int minRemainingTime = INT_MAX;
-
+        int highestPriority = INT_MAX;
         for (int i = 0; i < n; i++)
         {
-            if(processes[i].arrivalTime <= currentTime && processes[i].remainingTime > 0 && processes[i].remainingTime < minRemainingTime)
+            if(processes[i].arrivalTime <= currentTime && processes[i].remainingTime > 0 && processes[i].priority < highestPriority)
             {
-                minRemainingTime = processes[i].remainingTime;
+                highestPriority = processes[i].priority;
                 minIndex = i;
             }
         }
@@ -49,19 +48,21 @@ void calculateSJF(vector<ProcessSJF>&processes)
             processes[minIndex].turnaroundTime = processes[minIndex].completionTime - processes[minIndex].arrivalTime;
             processes[minIndex].waitingTime = processes[minIndex].turnaroundTime-processes[minIndex].burstTime;
 
-            totalWaitingTime += processes[minIndex].waitingTime;
             totalTurnaroundTime += processes[minIndex].turnaroundTime;
+            totalWaitingTime += processes[minIndex].waitingTime;
         }
+        
     }
+    
 
-    cout << "\nProcess\tAT\tBT\tCT\tTAT\tWT\n";
+    cout << "\nProcess\tAT\tBT\tPri\tCT\tTAT\tWT\n";
     for (auto& p : processes) {
         cout << "P" << p.id << "\t" << p.arrivalTime << "\t" << p.burstTime << "\t"
-             << p.completionTime << "\t" << p.turnaroundTime << "\t" << p.waitingTime << "\n";
+             << p.priority << "\t" << p.completionTime << "\t" << p.turnaroundTime << "\t" << p.waitingTime << "\n";
     }
 
-    cout << "\nAverage Turnaround Time: " << (float)totalTurnaroundTime / n << "\n";
-    cout << "Average Waiting Time: " << (float)totalWaitingTime / n << "\n";
+    cout << "\nAverate Turnaround Time : " << (float)totalTurnaroundTime / n << endl;
+    cout << "\nAverage Waiting Time : " << (float) totalWaitingTime / n << endl;
 
     cout << "\nGant Chart: \n";
     for (int i = 0; i < gantChart.size(); i++)
@@ -77,5 +78,4 @@ void calculateSJF(vector<ProcessSJF>&processes)
     }
 
     cout << endl;
-    
 }
