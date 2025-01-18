@@ -77,25 +77,24 @@ int main()
         else if(num == 4)
         {
             int n, timeQuantum;
-
             cout << "Enter the number of processes: ";
             cin >> n;
 
-            cout << "Enter the time quantum: ";
+            cout << "\nEnter Time Quantum: ";
             cin >> timeQuantum;
 
             vector<ProcessRR> processes(n);
 
             for (int i = 0; i < n; i++) {
-                cout << "Enter arrival time for process " << i + 1 << ": ";
-                cin >> processes[i].arrivalTime;
-                cout << "Enter burst time for process " << i + 1 << ": ";
-                cin >> processes[i].burstTime;
+                cout << "\nEnter details for Process " << i + 1 << endl;
                 processes[i].pid = i + 1;
-                processes[i].waitingTime = 0;
-                processes[i].turnaroundTime = 0;
-                processes[i].completionTime = 0;
+                cout << "Arrival Time: ";
+                cin >> processes[i].arrivalTime;
+                cout << "Burst Time: ";
+                cin >> processes[i].burstTime;
+                processes[i].remainingTime = processes[i].burstTime;
             }
+        
 
             roundRobin(processes, timeQuantum);
         }

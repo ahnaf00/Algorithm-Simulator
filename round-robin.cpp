@@ -1,49 +1,86 @@
 #include "scheduling.h"
 
 void roundRobin(vector<ProcessRR> &processes, int timeQuantum) {
-    int n = processes.size();
     queue<int> readyQueue;
-
-    for (int i = 0; i < n; i++) {
-        processes[i].remainingTime = processes[i].burstTime;
-        readyQueue.push(i);
-    }
-
+    vector<int> ganttChart; // Store Gantt chart sequence
     int currentTime = 0;
+    int completed = 0;
+    int n = processes.size();
 
-    while (!readyQueue.empty()) {
-        int index = readyQueue.front();
+    // Sort processes by arrival time
+    sort(processes.begin(), processes.end(), [](ProcessRR& a, ProcessRR& b) {
+        return a.arrivalTime < b.arrivalTime;
+    });
+
+    // Push the first process into the ready queue
+    readyQueue.push(0);
+    vector<bool> inQueue(n, false);
+    inQueue[0] = true;
+
+    while (completed < n) {
+        if (readyQueue.empty()) {
+            currentTime++;
+            for (int i = 0; i < n; i++) {
+                if (!inQueue[i] && processes[i].arrivalTime <= currentTime) {
+                    readyQueue.push(i);
+                    inQueue[i] = true;
+                    break;
+                }
+            }
+            continue;
+        }
+
+        int currentProcess = readyQueue.front();
         readyQueue.pop();
 
-        // ProcessRR the current process for a time quantum or its remaining time
-        int timeSlice = min(timeQuantum, processes[index].remainingTime);
-        currentTime += timeSlice;
-        processes[index].remainingTime -= timeSlice;
+        if (processes[currentProcess].remainingTime > timeQuantum) {
+            ganttChart.push_back(processes[currentProcess].pid);
+            currentTime += timeQuantum;
+            processes[currentProcess].remainingTime -= timeQuantum;
 
-        if (processes[index].remainingTime > 0) {
-            readyQueue.push(index); // Re-add process to the queue if it's not finished
+            // Add newly arrived processes to the ready queue
+            for (int i = 0; i < n; i++) {
+                if (!inQueue[i] && processes[i].arrivalTime <= currentTime) {
+                    readyQueue.push(i);
+                    inQueue[i] = true;
+                }
+            }
+
+            // Re-add current process to the end of the queue
+            readyQueue.push(currentProcess);
         } else {
-            // Calculate completion, turnaround, and waiting times
-            processes[index].completionTime = currentTime;
-            processes[index].turnaroundTime = processes[index].completionTime - processes[index].arrivalTime;
-            processes[index].waitingTime = processes[index].turnaroundTime - processes[index].burstTime;
+            ganttChart.push_back(processes[currentProcess].pid);
+            currentTime += processes[currentProcess].remainingTime;
+            processes[currentProcess].remainingTime = 0;
+            processes[currentProcess].completionTime = currentTime;
+            processes[currentProcess].turnaroundTime = processes[currentProcess].completionTime - processes[currentProcess].arrivalTime;
+            processes[currentProcess].waitingTime = processes[currentProcess].turnaroundTime - processes[currentProcess].burstTime;
+            completed++;
+
+            // Add newly arrived processes to the ready queue
+            for (int i = 0; i < n; i++) {
+                if (!inQueue[i] && processes[i].arrivalTime <= currentTime) {
+                    readyQueue.push(i);
+                    inQueue[i] = true;
+                }
+            }
         }
     }
 
-    cout << "PID\tArrival Time\tBurst Time\tCompletion Time\tWaiting Time\tTurnaround Time\n";
-    for (const auto &process : processes) {
-        cout << process.pid << "\t" << process.arrivalTime << "\t\t" << process.burstTime << "\t\t"
-             << process.completionTime << "\t\t" << process.waitingTime << "\t\t" << process.turnaroundTime << "\n";
+    cout << "\nProcess	Arrival	Burst	Completion	Turnaround	Waiting" << endl;
+    for (const auto& process : processes) {
+        cout << "P" << process.pid << "\t"
+            << process.arrivalTime << "\t"
+            << process.burstTime << "\t"
+            << process.completionTime << "\t\t"
+            << process.turnaroundTime << "\t\t"
+            << process.waitingTime << endl;
     }
 
-    double totalWaitingTime = 0;
-    double totalTurnaroundTime = 0;
-
-    for (const auto &process : processes) {
-        totalWaitingTime += process.waitingTime;
-        totalTurnaroundTime += process.turnaroundTime;
+    // Print Gantt chart
+    cout << "\nGantt Chart: " << endl;
+    for (int pid : ganttChart) {
+        cout << "| P" << pid << " ";
     }
-
-    cout << "\nAverage Waiting Time: " << fixed << setprecision(2) << totalWaitingTime / processes.size() << endl;
-    cout << "Average Turnaround Time: " << fixed << setprecision(2) << totalTurnaroundTime / processes.size() << endl;
+    cout << "|" << endl;
 }

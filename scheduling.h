@@ -39,13 +39,13 @@ class ProcessPS{
 
 class ProcessRR {
     public:
-        int pid;              // Process ID
-        int burstTime;        // Burst Time
-        int remainingTime;    // Remaining Time
-        int waitingTime;      // Waiting Time
-        int turnaroundTime;   // Turnaround Time
-        int completionTime;   // Completion Time
-        int arrivalTime;      // Arrival Time (default = 0)
+        int pid; // Process ID
+        int arrivalTime; // Arrival time
+        int burstTime; // Burst time
+        int remainingTime; // Remaining time
+        int completionTime; // Completion time
+        int waitingTime; // Waiting time
+        int turnaroundTime; // Turnaround time
 };
 
 
