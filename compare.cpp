@@ -67,14 +67,6 @@ void compareAllAlgorithms(const vector<int> &arrivalTimes, const vector<int> &bu
     avgRrWaiting /= n;
     avgRrTurnaround /= n;
 
-    // Display Results
-    // cout << "\nAlgorithm Comparison:\n";
-    // cout << "Algorithm\t\tAverage Waiting Time\tAverage Turnaround Time\n";
-    // cout << "FCFS\t\t" << avgFcfsWaiting << "\t\t" << avgFcfsTurnaround << "\n";
-    // cout << "SJF\t\t" << avgSjfWaiting << "\t\t" << avgSjfTurnaround << "\n";
-    // cout << "Priority\t\t" << avgPsWaiting << "\t\t" << avgPsTurnaround << "\n";
-    // cout << "Round Robin\t" << avgRrWaiting << "\t\t" << avgRrTurnaround << "\n";
-
     cout << "\n======================== Algorithm Comparison ========================\n";
     cout << left << setw(20) << "Algorithm" 
         << setw(25) << "Average Waiting Time" 
