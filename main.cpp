@@ -6,8 +6,11 @@ int main()
     while (true)
     {
         int num;
-        cout << "1. First Come First Serve (FCFS)\n2.Shortest Job First(SJF)\n3. Terminate\nSelect Algorithm : ";
+        cout << endl << endl;
+        cout << "1. First Come First Serve (FCFS)\n2.Shortest Job First(SJF)\n3. Priority Scheduling\n4. Round Robin\n5.Compare\nSelect Algorithm : ";
+        cout << endl;
         cin >> num;
+        cout << endl;
 
         if(num==1)
         {
@@ -97,6 +100,13 @@ int main()
         
 
             roundRobin(processes, timeQuantum);
+        }
+        else if(num == 5)
+        {
+            vector<int> arrivalTimes = {0, 2, 4, 6};
+            vector<int> burstTimes = {8, 4, 2, 1};
+
+            compareAllAlgorithms(arrivalTimes, burstTimes);
         }
     }
     

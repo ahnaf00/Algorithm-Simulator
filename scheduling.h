@@ -53,5 +53,6 @@ void firtComeFirstSeerved(vector<Process>&processes);
 void calculateSJF(vector<ProcessSJF>&processes);
 void calculatePriorityScheduling(vector<ProcessPS>&processes);
 void roundRobin(vector<ProcessRR>&processes, int timeQuantum);
+void compareAllAlgorithms(const vector<int> &arrivalTimes, const vector<int> &burstTimes);
 
 #endif

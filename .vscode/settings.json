@@ -1,8 +1,0 @@
-{
-    "files.associations": {
-        "*.ndjson": "jsonl",
-        "*.dbclient-js": "javascript",
-        "*.embeddedhtml": "html",
-        "iostream": "cpp"
-    }
-}
