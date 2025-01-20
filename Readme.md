@@ -1,4 +1,4 @@
-# ✨ CPU Scheduling Algorithms Implementation
+# ✨ CPU Scheduling Algorithms Simulator
 
 ## 📜 Overview
 This project demonstrates the implementation of four fundamental CPU scheduling algorithms with dynamic input handling and Gantt chart visualizations. It provides a robust framework to calculate and analyze process metrics like waiting time and turnaround time, enabling easy comparison of algorithms based on performance.
