@@ -83,21 +83,22 @@ The project follows a modular and organized approach:
 
 ### **Steps**
 1.  Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/cpu-scheduling.git
+    ```bash
+    git clone https://github.com/your-username/cpu-scheduling.git
+    ```
 
 2.  Navigate to the project directory:
     ```bash
     cd cpu-scheduling
-
+    ```
 3.  Compile the code:
     ```bash
     g++ -o cpu_scheduling main.cpp scheduling.cpp
-
+    ```
 4.  Run the executable:
     ```bash
     ./cpu_scheduling
-
+    ```
 ## 📊 Performance Analysis
 
 ### **Comparison Metrics**
